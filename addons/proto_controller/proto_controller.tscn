@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://bs72ogkvdd7d6"]
+
+[ext_resource type="Script" uid="uid://d3srwrdf4k0iu" path="res://addons/proto_controller/proto_controller.gd" id="1_ucva2"]
+[ext_resource type="PackedScene" uid="uid://8j3k4dcnvgl8" path="res://assets/models/Martial_Hero_Kid_0710004921_texture.fbx" id="2_wr06p"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iof21"]
+radius = 0.4
+height = 1.8
+
+[node name="ProtoController" type="CharacterBody3D"]
+script = ExtResource("1_ucva2")
+can_sprint = true
+can_freefly = true
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.935627, 0, 0, 0, 0.729022, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_iof21")
+
+[node name="Martial_Hero_Kid_0710004921_texture" parent="." instance=ExtResource("2_wr06p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0301077, 0.999496, -0.173356)
+
+[node name="Head" type="Node3D" parent="Martial_Hero_Kid_0710004921_texture"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0301077, 0.700504, 0.173356)
+
+[node name="Camera3D" type="Camera3D" parent="Martial_Hero_Kid_0710004921_texture/Head"]
+transform = Transform3D(-1, 0, -8.74228e-08, -5.04158e-08, 0.816964, 0.576689, 7.14212e-08, 0.576689, -0.816964, 0.0350733, 0.955856, -2.11085)

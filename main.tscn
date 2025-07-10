@@ -1,0 +1,73 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2wl6edma7m7v"]
+
+[ext_resource type="PackedScene" uid="uid://boqje1vhb8hte" path="res://enhanced_player_character.tscn" id="1_h2yge"]
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="EnhancedPlayerCharacter" parent="." instance=ExtResource("1_h2yge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.312664, 0)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(4.69344, 0, 0, 0, 1, 0, 0, 0, 4.62634, 0, 0, -0.407861)
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.646201, 0, 0, 0, 1, 0, 0, 0, 0.441478, 0, 0, 0.0881605)
+size = Vector3(10, 0.25, 15)
+
+[node name="Wall1" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.213063, 0, 0, 0, 1, 0, 0, 0, 0.0580334, 0.000289347, 1.40364, -1.59204)
+size = Vector3(10.0011, 3.04474, 1)
+
+[node name="Wall2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.213063, 0, 0, 0, 1, 0, 0, 0, 0.0580334, 0.000289347, 1.40364, 1.59099)
+size = Vector3(10.0011, 3.04474, 1)
+
+[node name="Wall3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-9.3133e-09, 0, 0.0572037, 0, 1, 0, -0.216154, 0, -2.53672e-09, -1.03595, 1.40364, -0.0256407)
+size = Vector3(14.7605, 3.04474, 1)
+
+[node name="Wall4" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-9.3133e-09, 0, 0.0572037, 0, 1, 0, -0.216154, 0, -2.53672e-09, 1.0379, 1.40364, -0.0256407)
+size = Vector3(14.7605, 3.04474, 1)
+
+[node name="Pillar1" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.185395, 0, 0, 0, 1, 0, 0, 0, 0.182534, 1.00435, 1.67391, -1.56094)
+height = 3.09814
+sides = 15
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D/Pillar1"]
+transform = Transform3D(1.57355, 0, 0, 0, 0.112085, 0, 0, 0, 1.47658, -0.00211382, -1.43509, 0)
+sides = 15
+
+[node name="Pillar2" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.185395, 0, 0, 0, 1, 0, 0, 0, 0.182534, -1.00598, 1.67391, -1.56094)
+height = 3.09814
+sides = 15
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D/Pillar2"]
+transform = Transform3D(1.57355, 0, 0, 0, 0.112085, 0, 0, 0, 1.47658, -0.00211382, -1.43509, 0)
+sides = 15
+
+[node name="Pillar3" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.185395, 0, 0, 0, 1, 0, 0, 0, 0.182534, -0.990434, 1.67391, 1.55154)
+height = 3.09814
+sides = 15
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D/Pillar3"]
+transform = Transform3D(1.57355, 0, 0, 0, 0.112085, 0, 0, 0, 1.47658, -0.00211382, -1.43509, 0)
+sides = 15
+
+[node name="Pillar4" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(0.185395, 0, 0, 0, 1, 0, 0, 0, 0.182534, 0.996427, 1.67391, 1.53976)
+height = 3.09814
+sides = 15
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D/Pillar4"]
+transform = Transform3D(1.57355, 0, 0, 0, 0.112085, 0, 0, 0, 1.47658, -0.00211382, -1.43509, 0)
+sides = 15
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.513931, 0.857832, 0, -0.857832, -0.513931, 0, 14.1897, -8.48975)
