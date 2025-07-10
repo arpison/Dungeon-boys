@@ -13,7 +13,7 @@ extends CharacterBody3D
 ## Can we press to jump?
 @export var can_jump : bool = true
 ## Can we hold to run?
-@export var can_sprint : bool = false
+@export var can_sprint : bool = true
 ## Can we press to enter freefly mode (noclip)?
 @export var can_freefly : bool = false
 
@@ -72,15 +72,20 @@ var look_rotation : Vector2
 var move_speed : float = 0.0
 var freeflying : bool = false
 var target_camera_distance : float = 5.0
+var is_moving_debug : bool = false
 
 ## IMPORTANT REFERENCES
 @onready var collider: CollisionShape3D = $Collider
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var third_person_camera: Camera3D = $CameraPivot/ThirdPersonCamera
-@onready var character_model_manager: CharacterModelManager = $CharacterModel
+@onready var character_model_manager = $CharacterModel
 
 func _ready() -> void:
 	print("Enhanced ProtoController Ready")
+	print("can_move: ", can_move)
+	print("can_sprint: ", can_sprint)
+	print("base_speed: ", base_speed)
+	
 	check_input_mappings()
 	look_rotation.y = rotation.y
 	look_rotation.x = 0.0  # Start with level camera
@@ -89,6 +94,21 @@ func _ready() -> void:
 	# Set initial camera mode
 	set_camera_mode(camera_mode)
 	print("Camera mode set to: ", camera_mode)
+	
+	# Check if camera nodes exist (call deferred to avoid issues)
+	call_deferred("check_nodes")
+
+func check_nodes():
+	print("camera_pivot exists: ", camera_pivot != null)
+	print("third_person_camera exists: ", third_person_camera != null)
+	if not third_person_camera:
+		print("Looking for camera at path: $CameraPivot/ThirdPersonCamera")
+		var camera_node = get_node_or_null("CameraPivot/ThirdPersonCamera")
+		if camera_node:
+			print("Found camera manually!")
+			third_person_camera = camera_node
+		else:
+			print("Camera not found at expected path!")
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Mouse capturing
@@ -118,13 +138,19 @@ func _unhandled_input(event: InputEvent) -> void:
 			disable_freefly()
 
 func _physics_process(delta: float) -> void:
-	# Debug input
-	if Input.is_action_just_pressed("move_up"):
-		print("move_up pressed in physics process")
+	# Get input once for the entire function
+	var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
+	
+	# Minimal debug - only print once when movement starts
+	if input_dir != Vector2.ZERO and not is_moving_debug:
+		print("Movement started with input: ", input_dir)
+		is_moving_debug = true
+	elif input_dir == Vector2.ZERO and is_moving_debug:
+		print("Movement stopped")
+		is_moving_debug = false
 	
 	# If freeflying, handle freefly and nothing else
 	if can_freefly and freeflying:
-		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
 		var motion := (third_person_camera.global_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		motion *= freefly_speed * delta
 		move_and_collide(motion)
@@ -154,12 +180,16 @@ func _physics_process(delta: float) -> void:
 	# Apply desired movement to velocity
 	var is_moving = false
 	if can_move:
-		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
-		
 		# Third-person movement: use camera direction
+		if not third_person_camera:
+			print("Error: third_person_camera is null!")
+			return
+		
 		var camera_basis = third_person_camera.global_basis
 		var move_dir := (camera_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 		move_dir.y = 0  # Keep movement on the ground plane
+		
+		# Debug removed to prevent spam
 		
 		if move_dir:
 			velocity.x = move_dir.x * move_speed
@@ -220,7 +250,7 @@ func set_camera_mode(mode: String):
 		update_third_person_camera(0.0)
 
 func update_character_animations(is_moving: bool, is_running: bool, is_jumping: bool):
-	if character_model_manager:
+	if character_model_manager and character_model_manager.has_method("set_movement_state"):
 		character_model_manager.set_movement_state(is_moving, is_running, is_jumping)
 
 func enable_freefly():

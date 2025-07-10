@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://8j3k4dcnvgl8"
-path="res://.godot/imported/Martial_Hero_Kid_0710004921_texture.fbx-ddfd89519e6c71b844a48fd937a11bef.scn"
+valid=false
 
 [deps]
 
 source_file="res://assets/models/Martial_Hero_Kid_0710004921_texture.fbx"
-dest_files=["res://.godot/imported/Martial_Hero_Kid_0710004921_texture.fbx-ddfd89519e6c71b844a48fd937a11bef.scn"]
 
 [params]
 

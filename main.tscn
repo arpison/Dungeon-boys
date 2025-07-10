@@ -1,13 +1,15 @@
 [gd_scene load_steps=2 format=3 uid="uid://c2wl6edma7m7v"]
 
-[ext_resource type="PackedScene" uid="uid://boqje1vhb8hte" path="res://enhanced_player_character.tscn" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_proto"]
 
 [node name="Main" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
-[node name="EnhancedPlayerCharacter" parent="." instance=ExtResource("1_h2yge")]
+[node name="ProtoController" parent="." instance=ExtResource("1_proto")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.312664, 0)
+can_sprint = true
+can_freefly = true
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 transform = Transform3D(4.69344, 0, 0, 0, 1, 0, 0, 0, 4.62634, 0, 0, -0.407861)
